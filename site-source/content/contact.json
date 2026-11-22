@@ -1,4 +1,4 @@
 {
-  "formspree_endpoint": "",
-  "retention_period": ""
+  "formspree_endpoint": "https://formspree.io/f/xqpqyraz",
+  "retention_period": "상담 종료 후 90일"
 }
