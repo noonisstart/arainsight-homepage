@@ -1,0 +1,23 @@
+<section class="article-body" aria-labelledby="request-heading">
+<h2 id="request-heading">상담 신청서</h2>
+<p class="notice">{{status}}</p>
+<form id="inquiry" action="{{endpoint}}" method="post" data-endpoint="{{endpoint}}">
+<input type="hidden" name="상담 유형" value="{{kind}}">
+<div hidden><label>비워두세요 <input name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+<fieldset{{disabled}}>
+<legend>상담 정보 (모든 항목 필수)</legend>
+<label>기업·기관명 <input name="기업명" required maxlength="120" autocomplete="organization"></label>
+<label>담당자명 <input name="담당자명" required maxlength="60" autocomplete="name"></label>
+<label>연락처 <input name="연락처" type="tel" inputmode="tel" autocomplete="tel" required maxlength="32" pattern="[+0-9 .\-]{7,32}" title="전화번호를 숫자와 하이픈 등으로 입력하세요"></label>
+<label>상담 내용 <textarea name="상담 내용" required maxlength="2500" rows="6" placeholder="교육 대상, 인원, 희망 일정이나 해결하고 싶은 과제를 적어 주세요."></textarea></label>
+<div class="notice">
+<strong>개인정보 수집·이용 안내</strong>
+<ul><li>이용 목적 · 상담 접수, 회신 및 일정 조율</li><li>수집 항목 · 기업·기관명, 담당자명, 연락처, 상담 내용</li><li>보유·이용 기간 · {{retention}}</li><li>동의를 거부할 수 있으며, 거부하면 이 양식을 통해 상담을 신청할 수 없습니다.</li></ul>
+</div>
+<label class="consent"><input type="checkbox" name="개인정보 수집·이용 동의" value="동의" required> 개인정보 수집·이용에 동의합니다.</label>
+<button type="submit" class="button">상담 신청 보내기</button>
+</fieldset>
+<p class="submission-status" role="status" aria-live="polite"></p>
+</form>
+<script src="{{script}}" defer></script>
+</section>

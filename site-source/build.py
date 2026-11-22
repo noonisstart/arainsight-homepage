@@ -1,4 +1,5 @@
 import argparse
+from urllib.parse import urlsplit
 import json
 import os
 from pathlib import Path
@@ -48,6 +49,7 @@ document.addEventListener('keydown', event => {
 </script>"""
 OUT.mkdir(parents=True,exist_ok=True)
 (OUT / "style.css").write_text((ROOT / "style.css").read_text(encoding="utf-8") + "\n" + theme[settings["theme"]] + fonts[settings["font"]],encoding="utf-8")
+shutil.copy2(ROOT / "contact.js", OUT / "contact.js")
 shutil.copytree(ROOT / "images", OUT / "images", dirs_exist_ok=True)
 
 def url(current, *route):
@@ -132,12 +134,26 @@ query.addEventListener('input',filter);
 filter();
 </script>'''
 
-def contact_panel(kind):
-    return f'''<p class="notice" id="contact-status"><strong>접수 준비 중</strong> · {escape(settings["contact_status"])}</p>
-<section class="contact-fields" aria-labelledby="contact-items">
-<h2 id="contact-items">상담 신청에 필요한 항목</h2>
-<dl><dt>상담 유형</dt><dd>{escape(kind)}</dd><dt>기관·담당자</dt><dd>기관명, 담당자명, 이메일, 휴대전화</dd>
-<dt>교육 정보</dt><dd>교육 대상 및 인원, 희망 일정</dd><dt>요청사항</dt><dd>문의 내용, 개인정보 수집·이용 동의</dd></dl></section>'''
+def contact_panel(current, kind):
+    contact = read(DATA / "contact.json")
+    endpoint = contact.get("formspree_endpoint","").strip()
+    retention = contact.get("retention_period","").strip()
+    if endpoint:
+        parsed = urlsplit(endpoint)
+        if (parsed.scheme != "https" or parsed.netloc != "formspree.io"
+            or not re.fullmatch(r"/f/[a-zA-Z0-9]+",parsed.path) or parsed.query or parsed.fragment):
+            raise ValueError("Check the Formspree endpoint in content/contact.json.")
+        if not retention:
+            raise ValueError("Confirm the retention period before enabling contact collection.")
+    template = (ROOT / "contact-form.html").read_text(encoding="utf8")
+    values = {
+        "endpoint": endpoint, "kind": kind,
+        "retention": retention or "접수 시작 전에 확정하여 안내합니다.",
+        "disabled": "" if endpoint else " disabled",
+        "status": "운영 중인 상담 접수 양식입니다." if endpoint else "접수 준비 중입니다. 현재 입력하거나 전송할 수 없습니다.",
+        "script": Path(os.path.relpath(OUT / "contact.js",current)).as_posix(),
+    }
+    return re.sub(r"\{\{(\w+)\}\}",lambda match:escape(values[match[1]],quote=True),template)
 
 related = {"corporate":("corporate-ai","custom-training","기업 AI 교육"),"marketing":("marketing-md","practical-training","AI 마케팅·MD"),"career":("young-careers","job-portfolio","청년 취업")}
 for slug,title,description,categories in sections:
@@ -183,7 +199,7 @@ for slug,title,description,categories in sections:
             contact_route = ("education","custom-request") if slug=="programs" else ("consulting","project-request")
             extra += href(url(current,"contact",*(contact_route if ("contact",*contact_route) in entries else ())),"상담 안내 보기 ↗","button")
         if slug=="contact":
-            extra += contact_panel(cat_title)
+            extra += contact_panel(current,cat_title)
         write((slug,category,entry),[*middle,((slug,category,entry),name)],name,summary,extra)
 home = (ROOT / "home.html").read_text(encoding="utf-8")
 home = re.sub(r'<header class="shell top">.*?</header>',render_header(OUT),home,count=1,flags=re.S)

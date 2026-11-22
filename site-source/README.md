@@ -15,3 +15,7 @@
 검토 브랜치에서 생성된 사이트를 확인한 뒤 병합 여부를 결정합니다. 공개 운영 시 저장소의 Pages 설정에서 GitHub Actions를 선택하고, 저장소 Actions 변수 ARAIN_PAGES_DEPLOY를 true로 설정하면 이후 main 편집이 재빌드 및 배포됩니다. 비공개 저장소의 Pages 사용 가능 여부와 공개 정책을 먼저 확인하세요.
 
 로컬 확인은 저장소 루트에서 python site-source/build.py --output dist 및 python site-source/verify.py dist 를 실행합니다.
+
+## 상담 접수 연결
+
+Formspree에서 수신 이메일 확인과 양식 생성 후 공개 폼 주소를 content/contact.json의 formspree_endpoint에 입력합니다. 실제 운영 기준의 개인정보 보유·이용 기간을 retention_period에 입력합니다. 외부 서비스의 개인정보 처리 방식과 운영 안내를 확정한 후 연결합니다. 두 값이 준비되기 전에는 입력과 제출이 비활성화됩니다. 적용 후 이름과 전화번호 대신 합성 테스트 값을 사용해 양식 기록과 수신함 도착을 확인하세요.
