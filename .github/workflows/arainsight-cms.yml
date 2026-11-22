@@ -1,0 +1,48 @@
+name: Build Arainsight CMS site
+
+on:
+  push:
+    branches: [main, arainsight-pages-cms]
+    paths: [".pages.yml", "site-source/**", ".github/workflows/arainsight-cms.yml"]
+  pull_request:
+    paths: [".pages.yml", "site-source/**", ".github/workflows/arainsight-cms.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python site-source/build.py --output dist
+      - run: python site-source/verify.py dist
+      - uses: actions/upload-artifact@v6
+        with:
+          name: arainsight-preview
+          path: dist
+      - uses: actions/upload-pages-artifact@v4
+        if: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.ARAIN_PAGES_DEPLOY == 'true' }}
+        with:
+          path: dist
+  deploy:
+    if: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.ARAIN_PAGES_DEPLOY == 'true' }}
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: arainsight-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - uses: actions/deploy-pages@v4
+        id: deploy

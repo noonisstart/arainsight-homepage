@@ -1,0 +1,24 @@
+{
+  "category": "marketing",
+  "category_title": "AI 마케팅",
+  "slug": "after-the-click",
+  "title": "광고 클릭이 늘었을 때 먼저 볼 숫자",
+  "summary": "클릭 이후의 방문과 전환 흐름을 함께 점검합니다.",
+  "body": [
+    {
+      "heading": "방문율",
+      "text": "클릭과 실제 방문을 비교하고 랜딩 도달과 측정 설정을 확인하세요."
+    },
+    {
+      "heading": "전환율",
+      "text": "방문에서 상담 신청까지 같은 기간과 같은 전환 정의로 비교하세요."
+    },
+    {
+      "heading": "검증 계획",
+      "text": "이탈이 큰 단계에서 한 가지 가설을 고르고 다음 실험의 성공 기준을 정하세요."
+    }
+  ],
+  "image": "/images/workshop.jpg",
+  "image_alt": "교육 워크숍 연출 이미지",
+  "sample": true
+}

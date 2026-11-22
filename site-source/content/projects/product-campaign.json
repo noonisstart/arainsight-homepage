@@ -1,0 +1,24 @@
+{
+  "category": "marketing",
+  "category_title": "AI 마케팅·MD",
+  "slug": "product-campaign",
+  "title": "상품 마케팅 캠페인 실습",
+  "summary": "마케터와 MD를 대상으로 설계한 샘플 프로젝트입니다.",
+  "body": [
+    {
+      "heading": "교육 목적",
+      "text": "상품의 고객과 구매장벽을 정리해 채널별 광고 제안을 설계합니다."
+    },
+    {
+      "heading": "수행 내용 예시",
+      "text": "가상 상품으로 상세페이지 첫 화면과 광고 메시지 2안을 구성합니다."
+    },
+    {
+      "heading": "결과물 예시",
+      "text": "상품 제안서, 광고 소재 비교표, 성과 점검표"
+    }
+  ],
+  "image": "/images/workshop.jpg",
+  "image_alt": "교육 워크숍 연출 이미지",
+  "sample": true
+}
