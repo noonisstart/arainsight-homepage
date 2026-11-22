@@ -227,7 +227,7 @@ replace_fragment(r'<div class="program-grid">.*?</div><aside',listing("programs"
 replace_fragment(r'<article class="feature">.*?</article>',listing("projects",3))
 replace_fragment(r'<div class="insight-grid">.*?</div></section>',listing("insights",3)+'</section>')
 replace_fragment(r'<h2>우리 조직에 필요한 교육,.*?</h2>',f'<h2>{escape(settings["contact_heading"])}</h2>')
-home = home.replace('./contact/education/custom-request/index.html', './contact/index.html')
+replace_fragment(r'<details><summary class="button">.*?</details>',href(url(OUT,"contact"),"맞춤형 교육 상담 신청 ↗","button"))
 home = re.sub(r'<script>.*?</script>',MOBILE,home,count=1,flags=re.S)
 (OUT / "index.html").write_text(home,encoding="utf-8")
 print(f"Built {len(list(OUT.rglob('index.html')))} pages in {OUT}")
