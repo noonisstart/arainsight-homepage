@@ -7,5 +7,19 @@
   "contact_heading": "우리 조직에 필요한 교육, 함께 설계해 보세요.",
   "contact_status": "현재는 상담 신청을 받지 않습니다.",
   "theme": "navy",
-  "font": "noto"
+  "font": "noto",
+  "heading_font": "inherit",
+  "hero_layout": "split",
+  "card_layout": "grid",
+  "home_order": "standard",
+  "primary_color": "",
+  "accent_color": "",
+  "background_color": "",
+  "expertise_heading": "",
+  "about_heading": "",
+  "about_intro": "",
+  "programs_heading": "",
+  "projects_heading": "",
+  "insights_heading": "",
+  "contact_button": "맞춤형 교육 상담 신청"
 }

@@ -10,7 +10,7 @@
   "content": [
     {
       "name": "site_settings",
-      "label": "메인 화면·사이트 설정",
+      "label": "홈페이지 디자인·문구",
       "type": "file",
       "format": "json",
       "path": "site-source/content/settings.json",
@@ -72,11 +72,159 @@
           "type": "select",
           "options": {
             "values": [
-              "noto",
-              "system"
+              {
+                "name": "noto",
+                "label": "Noto Sans KR"
+              },
+              {
+                "name": "system",
+                "label": "시스템 기본"
+              },
+              {
+                "name": "serif",
+                "label": "명조"
+              }
             ]
           },
           "required": true
+        },
+        {
+          "name": "heading_font",
+          "label": "제목 글꼴",
+          "type": "select",
+          "options": {
+            "values": [
+              {
+                "name": "inherit",
+                "label": "본문과 동일"
+              },
+              {
+                "name": "system",
+                "label": "시스템 고딕"
+              },
+              {
+                "name": "serif",
+                "label": "명조"
+              }
+            ]
+          },
+          "required": true
+        },
+        {
+          "name": "hero_layout",
+          "label": "첫 화면 배치",
+          "type": "select",
+          "options": {
+            "values": [
+              {
+                "name": "split",
+                "label": "문구 왼쪽 · 사진 오른쪽"
+              },
+              {
+                "name": "reverse",
+                "label": "사진 왼쪽 · 문구 오른쪽"
+              },
+              {
+                "name": "stack",
+                "label": "문구 위 · 사진 아래"
+              }
+            ]
+          },
+          "required": true
+        },
+        {
+          "name": "card_layout",
+          "label": "홈 카드 배치",
+          "type": "select",
+          "options": {
+            "values": [
+              {
+                "name": "grid",
+                "label": "3열"
+              },
+              {
+                "name": "wide",
+                "label": "2열"
+              },
+              {
+                "name": "list",
+                "label": "1열"
+              }
+            ]
+          },
+          "required": true
+        },
+        {
+          "name": "home_order",
+          "label": "홈 섹션 순서",
+          "type": "select",
+          "options": {
+            "values": [
+              {
+                "name": "standard",
+                "label": "기본 순서"
+              },
+              {
+                "name": "programs",
+                "label": "교육 프로그램 먼저"
+              },
+              {
+                "name": "projects",
+                "label": "프로젝트 먼저"
+              }
+            ]
+          },
+          "required": true
+        },
+        {
+          "name": "primary_color",
+          "label": "기본색 (예: #132B3A)",
+          "type": "string"
+        },
+        {
+          "name": "accent_color",
+          "label": "강조색 (예: #28B9A5)",
+          "type": "string"
+        },
+        {
+          "name": "background_color",
+          "label": "배경색 (예: #F5F7F6)",
+          "type": "string"
+        },
+        {
+          "name": "expertise_heading",
+          "label": "교육 분야 제목",
+          "type": "string"
+        },
+        {
+          "name": "about_heading",
+          "label": "교육 철학 제목",
+          "type": "string"
+        },
+        {
+          "name": "about_intro",
+          "label": "교육 철학 소개",
+          "type": "text"
+        },
+        {
+          "name": "programs_heading",
+          "label": "교육 프로그램 제목",
+          "type": "string"
+        },
+        {
+          "name": "projects_heading",
+          "label": "프로젝트 제목",
+          "type": "string"
+        },
+        {
+          "name": "insights_heading",
+          "label": "인사이트 제목",
+          "type": "string"
+        },
+        {
+          "name": "contact_button",
+          "label": "홈 하단 상담 버튼 문구",
+          "type": "string"
         }
       ]
     },

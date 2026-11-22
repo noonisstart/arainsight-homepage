@@ -35,7 +35,31 @@ def unique_categories(categories):
     return list({cat[0]:cat for cat in categories}.values())
 
 theme = {"navy":"", "teal":":root{--navy:#104f48}"}
-fonts = {"noto":"", "system":":root{font-family:system-ui,'Malgun Gothic',sans-serif}"}
+serif = "'Noto Serif KR','Batang',serif"
+system = "system-ui,'Malgun Gothic',sans-serif"
+fonts = {"noto":"", "system":f":root{{font-family:{system}}}", "serif":f":root{{font-family:{serif}}}"}
+heading_fonts = {"inherit":"", "system":f"h1,h2,h3{{font-family:{system}}}", "serif":f"h1,h2,h3{{font-family:{serif}}}"}
+colors = []
+for field, token in (("primary_color","navy"),("accent_color","teal"),("background_color","bg")):
+    color = (settings.get(field) or "").strip()
+    if color:
+        if not re.fullmatch(r"#[0-9a-fA-F]{6}", color):
+            raise ValueError(f"{field}: use a six-digit HEX color, e.g. #132B3A")
+        colors.append(f"--{token}:{color}")
+custom_colors = ":root{" + ";".join(colors) + "}" if colors else ""
+layout = {
+    "split":"",
+    "reverse":"@media(min-width:621px){.hero figure{grid-column:1;grid-row:1}.hero-copy{grid-column:2;grid-row:1}}",
+    "stack":".hero{grid-template-columns:minmax(0,1fr)}.hero-img{aspect-ratio:2}",
+}
+cards_layout = {"grid":"","wide":"@media(min-width:821px){.home .inner-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}","list":".home .inner-grid{grid-template-columns:minmax(0,1fr)}"}
+design = (theme[settings["theme"]] + fonts[settings["font"]] +
+          heading_fonts[settings.get("heading_font","inherit")] + custom_colors +
+          layout[settings.get("hero_layout","split")] + cards_layout[settings.get("card_layout","grid")])
+font_import = ""
+if settings["font"] == "serif" or settings.get("heading_font") == "serif":
+    font_import = "@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400%3B700&display=swap');\n"
+
 
 BRAND = '<i></i><span>ARAIN <b>SIGHT</b><small>아라인사이트</small></span>'
 MOBILE = """<script>
@@ -48,7 +72,7 @@ document.addEventListener('keydown', event => {
 });
 </script>"""
 OUT.mkdir(parents=True,exist_ok=True)
-(OUT / "style.css").write_text((ROOT / "style.css").read_text(encoding="utf-8") + "\n" + theme[settings["theme"]] + fonts[settings["font"]],encoding="utf-8")
+(OUT / "style.css").write_text(font_import + (ROOT / "style.css").read_text(encoding="utf-8") + "\n" + design,encoding="utf-8")
 shutil.copy2(ROOT / "contact.js", OUT / "contact.js")
 shutil.copytree(ROOT / "images", OUT / "images", dirs_exist_ok=True)
 
@@ -227,7 +251,30 @@ replace_fragment(r'<div class="program-grid">.*?</div><aside',listing("programs"
 replace_fragment(r'<article class="feature">.*?</article>',listing("projects",3))
 replace_fragment(r'<div class="insight-grid">.*?</div></section>',listing("insights",3)+'</section>')
 replace_fragment(r'<h2>우리 조직에 필요한 교육,.*?</h2>',f'<h2>{escape(settings["contact_heading"])}</h2>')
-replace_fragment(r'<details><summary class="button">.*?</details>',href(url(OUT,"contact"),"맞춤형 교육 상담 신청 ↗","button"))
+replace_fragment(r'<details><summary class="button">.*?</details>',href(url(OUT,"contact"),(settings.get("contact_button") or "맞춤형 교육 상담 신청")+" ↗","button"))
 home = re.sub(r'<script>.*?</script>',MOBILE,home,count=1,flags=re.S)
+home = home.replace("<body>",'<body class="home">',1)
+headings = {"expertise":"expertise_heading","about":"about_heading","programs":"programs_heading","projects":"projects_heading","insights":"insights_heading"}
+for section, field in headings.items():
+    if settings.get(field):
+        pattern = fr'(<section\b[^>]*\bid="{section}"[^>]*>.*?)<h2>.*?</h2>'
+        home = re.sub(pattern,lambda m:m[1]+"<h2>"+escape(settings[field])+"</h2>",home,count=1,flags=re.S)
+if settings.get("about_intro"):
+    home = re.sub(r'(<section\b[^>]*\bid="about"[^>]*>.*?</h2>)<p>.*?</p>',
+                  lambda m:m[1]+"<p>"+escape(settings["about_intro"])+"</p>",home,count=1,flags=re.S)
+order = {
+    "standard": ("expertise","about","programs","projects","insights","contact"),
+    "programs": ("programs","expertise","about","projects","insights","contact"),
+    "projects": ("projects","expertise","about","programs","insights","contact"),
+}[settings.get("home_order","standard")]
+pattern = r'<section\b[^>]*\bid="(expertise|about|programs|projects|insights|contact)"[^>]*>.*?</section>'
+sections_html = {m[1]:m[0] for m in re.finditer(pattern,home,re.S)}
+if len(sections_html) != len(order):
+    raise ValueError("Homepage sections missing")
+sections_ordered = iter(sections_html[section] for section in order)
+home = re.sub(pattern,lambda _:next(sections_ordered),home,flags=re.S)
 (OUT / "index.html").write_text(home,encoding="utf-8")
+admin = OUT / "admin"
+admin.mkdir(exist_ok=True)
+shutil.copy2(ROOT / "admin.html", admin / "index.html")
 print(f"Built {len(list(OUT.rglob('index.html')))} pages in {OUT}")
