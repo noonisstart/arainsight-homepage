@@ -1,0 +1,24 @@
+{
+  "category": "career",
+  "category_title": "커리어 전환",
+  "slug": "career-to-portfolio",
+  "title": "경력의 경험을 포트폴리오로 바꾸는 법",
+  "summary": "업무 상황과 자신의 역할, 결과물을 한 사례로 정리합니다.",
+  "body": [
+    {
+      "heading": "업무 상황",
+      "text": "당시 어떤 문제를 해결해야 했고 어떤 사람이 결과물을 사용했는지 적으세요."
+    },
+    {
+      "heading": "자신의 역할",
+      "text": "팀의 성과를 설명할 때 자신이 직접 내린 결정과 수행한 일을 구체적으로 적으세요."
+    },
+    {
+      "heading": "결과물",
+      "text": "공개할 수 있는 결과물이나 재구성한 예시를 첨부하고 확인 가능한 근거를 적으세요."
+    }
+  ],
+  "image": "/images/workshop.jpg",
+  "image_alt": "교육 워크숍 연출 이미지",
+  "sample": true
+}

@@ -1,0 +1,14 @@
+{
+  "category": "consulting",
+  "category_title": "컨설팅 상담",
+  "slug": "project-request",
+  "title": "컨설팅 상담 신청",
+  "summary": "조직의 업무나 마케팅 과제를 확인하고 상담 범위를 논의합니다.",
+  "body": [
+    {
+      "heading": "준비할 내용",
+      "text": "해결하려는 과제, 현재 업무 흐름이나 채널, 희망 일정"
+    }
+  ],
+  "section": "contact"
+}

@@ -1,0 +1,21 @@
+{
+  "category": "performance",
+  "category_title": "마케팅 성과 분석",
+  "slug": "funnel-review",
+  "title": "광고·전환 성과 진단",
+  "summary": "광고비와 단계별 성과를 비교해 다음 검증 과제를 정합니다.",
+  "body": [
+    {
+      "heading": "서비스 범위",
+      "text": "광고 KPI 정의, 전환 흐름 비교, 우선 분석 항목 선정"
+    },
+    {
+      "heading": "진행 절차",
+      "text": "데이터 범위 확인 → 지표 검증 → 병목과 가설 정리 → 테스트 제안"
+    },
+    {
+      "heading": "산출물",
+      "text": "KPI 요약표, 검증할 가설, 개선 과제 목록"
+    }
+  ]
+}

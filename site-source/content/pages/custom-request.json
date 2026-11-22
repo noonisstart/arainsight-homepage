@@ -1,0 +1,14 @@
+{
+  "category": "education",
+  "category_title": "교육 상담",
+  "slug": "custom-request",
+  "title": "맞춤형 교육 상담 신청",
+  "summary": "교육 대상과 목표에 맞춰 과정 구성을 검토합니다.",
+  "body": [
+    {
+      "heading": "준비할 내용",
+      "text": "교육 대상과 인원, 기대하는 결과물, 희망 일정과 진행 방식"
+    }
+  ],
+  "section": "contact"
+}
